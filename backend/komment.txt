@@ -1,0 +1,5 @@
+(1) file index.js. 
+This file will be responsible for managing the relationships between entities in our database. 
+By creating an index.js file in the models folder, we can define and configure these relationships 
+using Sequelize’s associations. This allows us to efficiently navigate and query the database based 
+on these relationships.

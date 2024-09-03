@@ -1,0 +1,8 @@
+Go to Control panel
+System and sequrity
+System
+Advanced system settings
+Environment Variables
+.. and create new path
+(C:\Program Files\MySQL\MySQL Server 9.0\bin)
+Ok, ok, ok,...

@@ -1,0 +1,46 @@
+.head {
+    margin-top: 20px;
+}
+
+.mainBlock {
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: whitesmoke;
+    padding: 10px;
+}
+
+.setBlock {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.setBlock1 {
+    width: 70%;
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: left;
+}
+.setBlock2 {
+    width: 30%;
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: space-around;
+}
+
+.setBlock p {
+    margin: 0 10px 0 10px;
+    font-size: 1.2rem;
+}
+.link {
+    margin: 0 10px 0 10px;
+    font-size: 1.3rem;
+    color: brown;
+}
+
+.counter {
+    text-align: left;
+}
