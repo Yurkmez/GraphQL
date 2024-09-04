@@ -6,7 +6,8 @@ const router = Router();
 
 // Создание нового пользователя
 router.post('/add', async (req, res) => {
-    const hashPassword = await bcrypt.hash(req.body.firstName, 10);
+    console.log(req.body);
+    const hashPassword = await bcrypt.hash(req.body.password, 10);
     try {
         const user = await User.create({
             firstName: req.body.firstName,

@@ -14,15 +14,39 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+// ______GraphQl ______________________
+const { createHandler } = require('graphql-http/lib/use/express');
+const schema = require('./graphql/schema.js');
+const resolver = require('./graphql/resolver.js');
+const { ruruHTML } = require('ruru/server');
+// ____________________________
 
-const userRotes = require('./routes/userRoutes.js');
+// const userRotes = require('./routes/userRoutes.js');
 const sequelize = require('./configDB/db.js');
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:3000' }));
-app.use('/', userRotes);
+
+app.use(cors());
+// ______GraphQl ______________________
+// Serve the GraphiQL IDE.
+app.get('/', (_req, res) => {
+    res.type('html');
+    res.end(ruruHTML({ endpoint: '/graphql' }));
+});
+
+app.all(
+    '/graphql',
+    createHandler({
+        schema: schema,
+        rootValue: resolver,
+        graphiql: true,
+    })
+);
+// ____________________________
+
+// app.use('/', userRotes);
 const PORT = process.env.PORT || 5000;
 
 async function start() {

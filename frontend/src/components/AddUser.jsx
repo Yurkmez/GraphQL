@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import Axios from 'axios';
 
 import './user_edit_add.css';
 
@@ -16,24 +16,60 @@ const AddUser = () => {
 
     async function handleSubmit(event) {
         event.preventDefault();
+
+        // ____________graphql_________________
+        // Формирование тела запроса
+        const query = `
+            mutation {
+                createUser(input: {
+                    firstName: "${formData.firstName}",
+                    lastName: "${formData.lastName}",
+                    email: "${formData.email}",
+                    password: "${formData.password}", 
+                }) {
+                    firstName lastName email 
+                }
+            }
+        `;
         try {
-            await axios.post('http://localhost:5000/add', {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                email: formData.email,
-                password: formData.password,
+            Axios({
+                method: 'POST',
+                url: 'http://localhost:5000/graphql',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                data: { query },
+            }).then((response) => {
+                console.log(response.data.data.createUser);
+                navigate('/');
             });
-            setFormData({
-                firstName: '',
-                lastName: '',
-                email: '',
-                password: '',
-            });
-            navigate('/');
+            // _______ Вариант с fetch ___________________
+            // await fetch('http://localhost:5000/graphql', {
+            //     method: 'post',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         Accept: 'application/json',
+            //     },
+            //     body: JSON.stringify({ query }),
+            // })
+            //     .then((res) => res.json())
+            //     .then((response) => {
+            //         console.log(response.data.createUser);
+            //         navigate('/');
+            //     });
         } catch (error) {
             console.log(error);
         }
     }
+
+    // await axios.post('http://localhost:5000/add', {
+    //     firstName: formData.firstName,
+    //     lastName: formData.lastName,
+    //     email: formData.email,
+    //     password: formData.password,
+    // });
+    // navigate('/');
 
     // По идее, эти процедуры должны очищать поля ввода, но почемуто они их очищают раньше, чем данные отправляются
     // https://bobbyhadz.com/blog/javascript-clear-input-field-after-submit
